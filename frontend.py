@@ -5,11 +5,10 @@ Uses flask to create the lightweight web server which communicates with the
 web browser front end running
 """
 from functools import wraps
+from global_variables import *
 from flask import *
 
 app = Flask(__name__)
-running = False
-in_progress = False
 
 
 def run_check(function):
@@ -17,8 +16,8 @@ def run_check(function):
     def helper(*args, **kwargs):
         if not running:
             return render_template("home.html", running=running, ip="0.0.0.0")
-        elif in_progress:
-            return render_template("in_progress.html", data=in_progress)
+        elif all_data.in_progress:
+            return render_template("in_progress.html", data=all_data.in_progress)
         else:
             return function(*args, **kwargs)
     return helper
