@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Clicker Application</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/clicker.css">
+</head>
+<body>
+
+<nav class="navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Clicker</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#"> Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">End Polling</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row col-md-offset-2 col-md-8">
+	    <div class="panel panel-default">
+	        <div class="panel-heading">
+	            <h3 class="panel-title">Start a quick activity</h3>
+	        </div>
+	        <div class="panel-body">
+	            <div class="container">
+                    <div class="row center-block">
+                        <div class="col-md-offset-1 col-md-3">
+                            <button onclick="location.href='/mul_choice_inp'" class="btn btn-default center-block">Multiple Choice Type</button>
+                        </div>
+                        <div class="col-md-offset-1 col-md-3">
+                            <button class="btn btn-default center-block">Integer Type</button>
+                        </div>
+                    </div>
+                    <div class="buffer"></div>
+                    <div class="row center-block">
+                        <div class="col-md-offset-1 col-md-3">
+                            <button class="btn btn-default center-block">Text-type Answer</button>
+                        </div>
+                    </div>
+                </div>
+	        </div>
+	    </div>
+    </div>
+
+    <div class="row col-md-offset-2 col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Saved Activities</h3>
+            </div>
+            <div class="panel-body">
+                <div class="container">
+                    <div class="row center-block">
+                        <div class="col-md-offset-1 col-md-3">
+                            <button class="btn btn-default center-block">Start a quiz</button>
+                        </div>
+                        <div class="col-md-offset-1 col-md-3">
+                            <button class="btn btn-default center-block">Edit quizzes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="/static/js/jquery-2.1.3.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+</html>
