@@ -29,7 +29,7 @@
     function startServer()
     {
         $("#startServer").attr("disabled", "disabled").html("Starting...");
-        $.get("startServer", function( data ) {
+        $.get("/startServer", function( data ) {
 			location.reload();
         });
     }
