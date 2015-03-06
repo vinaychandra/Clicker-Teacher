@@ -30,7 +30,15 @@
     {
         $("#startServer").attr("disabled", "disabled").html("Starting...");
         $.get("/startServer", function( data ) {
-			location.reload();
+            console.log(data);
+            if (data == "True")
+            {
+				location.reload();
+			}
+			else
+			{
+				alert("Error in starting server")
+			}
         });
     }
 </script>
