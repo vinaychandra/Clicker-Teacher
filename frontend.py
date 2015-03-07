@@ -142,6 +142,19 @@ def text_type_inp(mode):
     if request.method == 'GET':
         return render_template("text_type_inp.html", mode="quick")
 
+    if request.method == 'POST':
+        if request.form['mode'] == 'quick':
+            question = request.form['question']
+            answer = request.form['answer']
+
+            # Set the in_progress
+            all_data.in_progress = {'mode': "quick", 'question': question, 'type': "text", 'answer': answer}
+
+            # Mode is quick. Therefore publish
+            all_data.publish = True
+
+            return redirect('/in_progress')
+
 
 if __name__ == '__main__':
     app.run()
