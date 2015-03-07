@@ -8,5 +8,6 @@ class Session:
         self.count = 0  # number of active connections
         self.running = False    # is the backend running?
         self.in_progress = False    # Data of the currently running session
+        self.publish = False  # Publish
 
 all_data = Session()

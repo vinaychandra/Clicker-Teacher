@@ -22,15 +22,16 @@ def run_check(function):
     :param function: The function on which the wrapper is being applied
     :type function: function
     """
+
     @wraps(function)
     def helper(*args, **kwargs):
-        print "Val is ",all_data.running
         if not all_data.running:
             return render_template("home.html", running=all_data.running, ip="0.0.0.0")
-        elif all_data.in_progress:
-            return render_template("in_progress.html", data=all_data.in_progress)
+        elif all_data.publish:
+            return redirect("/in_progress")
         else:
             return function(*args, **kwargs)
+
     return helper
 
 
@@ -51,7 +52,6 @@ def start_server():
     backend which is waiting exactly for this change
     """
     all_data.running = True
-    print "Changing...."
     return "True"
 
 
@@ -66,7 +66,33 @@ def mul_choice_inp(mode):
     if mode not in ['quick']:
         return abort(404)
     if request.method == 'GET':
-        return render_template("multiple_choice_inp.html", mode=mode)
+        return render_template("multiple_choice_inp.html", mode=mode, btn="Start Poll")
+
+    # Process the submit data
+    if request.method == 'POST':
+        if request.form['mode'] == 'quick':
+            # Get the options...
+            data = []
+            any_answer = False  # Stores if at least one answer is provided
+            question = request.form['question']
+            for choice in ['a', 'b', 'c', 'd']:
+                text = request.form['op' + choice.upper()]
+                if str(choice + 'c') in request.form:
+                    if request.form[choice + 'c'] == 'on':
+                        any_answer = True
+                        answer = True
+                    else:
+                        answer = False
+                else:
+                    answer = False
+                if text != "":
+                    data.append((text, answer))
+            # setting in_progress
+            all_data.in_progress = {'any_answer': any_answer, 'options': data, 'mode': "quick", 'question': question,
+                                    'type': "mul_choice"}
+            # mode is quick. Therefore publish
+            all_data.publish = True
+            return redirect('/in_progress')
 
 
 @app.route('/int_inp/<mode>', methods=['GET', 'POST'])
@@ -95,6 +121,7 @@ def text_type_inp(mode):
         return abort(404)
     if request.method == 'GET':
         return render_template("text_type_inp.html", mode="quick")
+
 
 if __name__ == '__main__':
     app.run()

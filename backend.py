@@ -13,6 +13,7 @@ def backend_handler(socket, address):
 
     all_data.count += 1
     print 'Accepting connection from ', address[0], ':', address[1]
-    socket.send("Accept " + str(all_data.count))
-    a = socket.recv(8)
-    print a, address
+    while all_data.publish is False:
+        pass
+    if all_data.in_progress['mode'] == "quick":
+        socket.send('Starting...')
