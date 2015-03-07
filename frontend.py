@@ -108,6 +108,26 @@ def int_type_inp(mode):
     if request.method == 'GET':
         return render_template("integer_type_inp.html", mode="quick")
 
+    if request.method == 'POST':
+        if request.form['mode'] == 'quick':
+            question = request.form['question']
+            answer = request.form['value']
+            rng = request.form['range']
+
+            # Default value for range
+            if answer == "" or rng == "":
+                rng = 0
+
+            # Set the in_progress
+            all_data.in_progress = {'mode': "quick", 'question': question, 'type': "numeric", 'range': float(rng)}
+            if answer != "":
+                all_data.in_progress['answer'] = float(answer)
+
+            # Mode is quick. Therefore publish
+            all_data.publish = True
+
+            return redirect('/in_progress')
+
 
 @app.route('/text_inp/<mode>', methods=['GET', 'POST'])
 @run_check
