@@ -43,7 +43,7 @@
     <div class="row col-md-offset-2 col-md-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Result - Question {{ question }}</h3>
+                <h3 class="panel-title">Result - Question {{ qno }}</h3>
             </div>
             <div class="panel-body">
                 <div class="container-fluid">
@@ -51,38 +51,39 @@
                         <div class="col-md-7">
                             <div class="row">
                                 <div class="well">
-                                    Question goes here
+                                    {{ question }}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="well-sm col-md-7 alert alert-success">
-                                    Option A
+                                    {{ options[0][0] }}
                                 </div>
-                                <span class="badge">45</span>
+                                <span class="badge">{{ result[0] }}</span>
                             </div>
                             <div class="row">
                                 <div class="well-sm col-md-7 alert alert-danger">
-                                    Option B
+                                    {{ options[1][0] }}
                                 </div>
-                                <span class="badge">10</span>
+                                <span class="badge">{{ result[1] }}</span>
                             </div>
                             <div class="row">
                                 <div class="well-sm col-md-7 alert alert-danger">
-                                    Option C
+                                    {{ options[2][0] }}
                                 </div>
-                                <span class="badge">20</span>
+                                <span class="badge">{{ result[2] }}</span>
                             </div>
                             <div class="row">
                                 <div class="well-sm col-md-7 alert alert-danger">
-                                    Option D
+                                    {{ options[3][0] }}
                                 </div>
-                                <span class="badge">25</span>
+                                <span class="badge">{{ result[3] }}</span>
                             </div>
                         </div>
                         <div class="col-md-5">
                             <canvas id="how_many"></canvas>
                         </div>
                     </div>
+                    {% if mode not in ["quick"] %}
                     <div class="row center-block btn-group pull-right">
                         <button onclick="prev()" class="center-block btn btn-primary">
                             Prev
@@ -91,6 +92,7 @@
                             Next
                         </button>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -105,25 +107,25 @@
     $(function() {
         var data = [
             {
-                value: 45,
+                value: {{ result[0] }},
                 color: "#F7464A",
                 highlight: "#FF5A5E",
                 label: "A"
             },
             {
-                value: 20,
+                value: {{ result[1] }},
                 color: "#46BFBD",
                 highlight: "#5AD3D1",
                 label: "B"
             },
             {
-                value: 10,
+                value: {{ result[2] }},
                 color: "#FDB45C",
                 highlight: "#FFC870",
                 label: "C"
             },
             {
-                value: 25,
+                value: {{ result[3] }},
                 color: "#B48EAD",
                 highlight: "#C69CBE",
                 label: "D"

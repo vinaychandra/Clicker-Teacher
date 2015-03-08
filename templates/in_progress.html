@@ -49,11 +49,11 @@
                         <div class="col-md-offset-0 col-md-5">
                             <div class="row">
 	                            <div class="well">
-	                                Question goes here
+	                                {{ question }}
 	                            </div>
                             </div>
                             <div class="row center-block">
-                                <button onclick="window.location.href='/end'" class="center-block btn btn-primary">End polling</button>
+                                <button onclick="window.location.href='/end_{{ mode }}'" class="center-block btn btn-primary">End polling</button>
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -71,22 +71,38 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/Chart.min.js"></script>
 <script>
-    var data = [
-        {
-            value: 5,
-            color: "#F7464A",
-            highlight: "#FF5A5E",
-            label: "Not Answered"
-        },
-        {
-            value: 6,
-            color: "#46BFBD",
-            highlight: "#5AD3D1",
-            label: "Answered"
-        }
-    ];
-    var ctx = $("#how_many").get(0).getContext("2d");
-    var myPieChart = new Chart(ctx).Pie(data);
+    var myPieChart;
+	$(function() {
+		var data = [
+	            {
+	                value: 1,
+	                color: "#F7464A",
+	                highlight: "#FF5A5E",
+	                label: "Not Answered"
+	            },
+	            {
+	                value: 0,
+	                color: "#46BFBD",
+	                highlight: "#5AD3D1",
+	                label: "Answered"
+	            }
+	        ];
+        var ctx = $("#how_many").get(0).getContext("2d");
+        myPieChart = new Chart(ctx).Pie(data);
+        setInterval(dynamic_check, 3000)
+	});
 
+    function dynamic_check()
+    {
+        $.ajax({
+            url:'/in_progress_data',
+            success: function (data) {
+                // Data is sent in the format of "not answered <space> answered"
+                myPieChart.segments[0].value = parseInt(data.split(" ")[0]);
+                myPieChart.segments[1].value = parseInt(data.split(" ")[1]);
+                myPieChart.update();
+            }
+        });
+    }
 </script>
 </html>

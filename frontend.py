@@ -88,10 +88,13 @@ def mul_choice_inp(mode):
                 if text != "":
                     data.append((text, answer))
             # setting in_progress
-            all_data.in_progress = {'any_answer': any_answer, 'options': data, 'mode': "quick", 'question': question,
-                                    'type': "mul_choice"}
+            all_data.in_progress = {'any_answer': any_answer, 'options': data, 'question': question}
+            all_data.mode = "quick"
+            all_data.type = "mul_choice"
+
             # mode is quick. Therefore publish
             all_data.publish = True
+
             return redirect('/in_progress')
 
 
@@ -119,7 +122,9 @@ def int_type_inp(mode):
                 rng = 0
 
             # Set the in_progress
-            all_data.in_progress = {'mode': "quick", 'question': question, 'type': "numeric", 'range': float(rng)}
+            all_data.in_progress = {'question': question, 'range': float(rng)}
+            all_data.mode = "quick"
+            all_data.type = "numeric"
             if answer != "":
                 all_data.in_progress['answer'] = float(answer)
 
@@ -148,13 +153,35 @@ def text_type_inp(mode):
             answer = request.form['answer']
 
             # Set the in_progress
-            all_data.in_progress = {'mode': "quick", 'question': question, 'type': "text", 'answer': answer}
+            all_data.in_progress = {'question': question, 'answer': answer}
+            all_data.mode = "quick"
+            all_data.type = "text"
 
             # Mode is quick. Therefore publish
             all_data.publish = True
 
             return redirect('/in_progress')
 
+
+@app.route('/in_progress')
+def in_progress():
+    if all_data.publish is False:
+        return redirect('/')
+    return render_template("in_progress.html", question=all_data.in_progress['question'],
+                           mode=all_data.mode)
+
+
+@app.route('/end_quick')
+def end():
+    if all_data.mode == "quick":
+        all_data.publish = False
+        return redirect('/result_'+all_data.type)
+
+
+@app.route('/result_mul_choice')
+def result_mul_choice():
+    return render_template("result_mul_choice.html", question=all_data.in_progress['question'],
+                           options=all_data.in_progress['options'], result=all_data.results, mode="quick")
 
 if __name__ == '__main__':
     app.run()
